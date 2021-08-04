@@ -88,33 +88,52 @@ namespace ConsoleApp1
                     Bot(arr);
             }
             else
-                Console.WriteLine("Taken!");
+                Console.WriteLine("Position already taken!");
         }
 
 
         static void Main(string[] args)
         {
-            string[] arr = new string[9] { null, null, null, null, null, null, null, null, null };
-            Console.WriteLine(Grid(arr));
+            Console.WriteLine("Positions on grid");
+            string[] legend = new string[9] { "0", "1", "2", "3", "4", "5", "6", "7", "8" };
+            Console.WriteLine(Grid(legend));
+            Console.WriteLine("==========================================");
+            bool replay = true;
 
-
-            while (IsFinished(arr) == false)
+            while (replay)
             {
-                string inp = Console.ReadLine();
-                Player(inp, arr);
                 
-                Console.WriteLine();
+                string[] arr = new string[9] { null, null, null, null, null, null, null, null, null };
                 Console.WriteLine(Grid(arr));
+                
+                while (IsFinished(arr) == false)
+                {
+                    Console.WriteLine("***********************************************");
+                    Console.WriteLine("Insert position!");
+                    string inp = Console.ReadLine();
+                    Player(inp, arr);
+
+                    Console.WriteLine();
+                    Console.WriteLine(Grid(arr));
+
+                }
+
+                string s = Victroy(arr) == "x" ? "Player wins!" : Victroy(arr) == "" ? "Draw" : "Bot wins!";
+
+                Console.WriteLine();
+                Console.WriteLine(s);
+
+                Console.WriteLine("Replay?(y/n)");
+                string check = Console.ReadLine();
+
+                if (check.ToLower() == "n")
+                    replay = false;
 
             }
 
-            string s = Victroy(arr) == "x" ? "Player wins!" : Victroy(arr) == "" ? "Draw" : "Bot wins!";
-
-            Console.WriteLine();
-            Console.WriteLine(s);
             Console.WriteLine("Thank you for playing!");
             Console.ReadKey();
-                
+
         }
     }
 }
